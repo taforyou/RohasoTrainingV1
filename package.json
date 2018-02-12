@@ -1,0 +1,31 @@
+{
+  "name": "DemoReduxFirebase",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node node_modules/react-native/local-cli/cli.js start",
+    "test": "jest",
+    "postinstall": "remotedev-debugger --hostname=localhost --port=8000 --injectserver=reactnative"
+  },
+  "dependencies": {
+    "react": "^16.2.0",
+    "react-native": "0.53.0",
+    "react-redux": "^5.0.6",
+    "redux": "^3.7.2",
+    "redux-devtools-extension": "^2.13.2",
+    "redux-logger": "^3.0.6",
+    "redux-persist": "^5.6.12",
+    "redux-thunk": "^2.2.0"
+  },
+  "devDependencies": {
+    "babel-jest": "22.2.0",
+    "babel-preset-react-native": "4.0.0",
+    "jest": "22.2.0",
+    "react-test-renderer": "16.2.0",
+    "remote-redux-devtools": "^0.5.12",
+    "remote-redux-devtools-on-debugger": "^0.8.3"
+  },
+  "jest": {
+    "preset": "react-native"
+  }
+}
