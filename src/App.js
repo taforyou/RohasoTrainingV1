@@ -16,6 +16,7 @@ import { PersistGate } from 'redux-persist/integration/react'
 
 
 import store, { persistor } from './libs/store';
+import GoogleMapAPI from './src/components/services/API_GoogleMap'
 
 const instructions = Platform.select({
   ios: 'Press Cmd+R to reload,\n' +
