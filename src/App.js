@@ -19,21 +19,45 @@ export default class App extends Component {
 		this.onRegionChange = this.onRegionChange.bind(this)
 		this.mapPressed = this.onMapPressed.bind(this)
 	}
+
+	reverseGeocodingRequest(request) {
+		// Worked Now
+		const fetchAPI = async (request) => {
+			try {
+				const response = await fetch(
+					`https://maps.googleapis.com/maps/api/geocode/json?latlng=${request}&key=AIzaSyBN0XoBo1UePyYSeCTjJayNdPx2DHk3Qy8`
+				);
+				const result = await response.json();
+				if (result.status === 'OK') {
+					return result.results;
+				}
+				return;
+			} catch (err) {
+				console.error(err);
+			}
+		}
+		fetchAPI(request).then(result => {
+			this.setState({currentPlace: result[0].formatted_address})
+			console.log(this.state.currentPlace)
+		})
+	}
 	onRegionChange(region) {
 		// console.log('Latitude: ' + region.latitude + ' Longitude:' + region.longitude)
-		setTimeout(function () {
-			this.setState({
-				mapCoordinates: {
-						latitude: region.latitude,
-						longitude: region.longitude,
-						latitudeDelta: region.latitudeDelta,
-						longitudeDelta: region.longitudeDelta,
-				}
-			})
-		}.bind(this), 2000);
+		this.setState({
+			mapCoordinates: {
+				latitude: region.latitude,
+				longitude: region.longitude,
+				latitudeDelta: region.latitudeDelta,
+				longitudeDelta: region.longitudeDelta,
+			}
+		})
+		let latlong = region.latitude + ',' + region.longitude
+		this.reverseGeocodingRequest(latlong)
 	}
+
 	onMapPressed(value) {
 	}
+
 	render() {
 		return (
 			<Container style={{ flex: 1, backgroundColor: '#ffffff' }}>
@@ -52,6 +76,9 @@ export default class App extends Component {
 				</TouchableOpacity>
 				<Text>
 					Latitude: {this.state.mapCoordinates.latitude} Longitude: {this.state.mapCoordinates.longitude}
+				</Text>
+				<Text>
+					Address: {this.state.currentPlace}
 				</Text>
 			</Container>
 		)
