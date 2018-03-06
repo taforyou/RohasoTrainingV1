@@ -58,19 +58,55 @@ export default class MapPage extends Component {
 		};
 	};
 	// Internal Methods
-	onRegionChange(region) {
-		this.setState({
-			currentLocation: {
-				...this.state.currentLocation,
-				coords:
-					Object.assign({}
-						, this.state.currentLocation.coords
-						, region
-						, { flag: false }
-					)
-			}
-		})
+	async onRegionChange(updatedRegion) {
+		if (updatedRegion 
+		 && updatedRegion.hasOwnProperty('latitude') 
+		 && updatedRegion.hasOwnProperty('longitude')
+		) {
+			// Get Address from API (fetching reverse geocoding)
+			const updatedAddress = await this.requestReverseGeocoding(updatedRegion.latitude + ',' + updatedRegion.longitude)
+			
+			// Update in states
+			this.setState({
+				currentLocation: {
+					...this.state.currentLocation,
+					coords:
+						Object.assign({}
+							, this.state.currentLocation.coords
+							, updatedRegion
+							, { flag: false }
+						),
+					address:
+						Object.assign({}
+							, this.state.currentLocation.address
+							, updatedAddress
+							, { flag: false }
+						),
+					
+				}
+			}, () => { console.log(this.state) })
+		}
+
 	};
+
+	async requestReverseGeocoding(latlong) {
+		const fetchAPI = async (latlong) => {
+			try {
+				const response = await fetch(
+					`https://maps.googleapis.com/maps/api/geocode/json?latlng=${latlong}&key=AIzaSyBN0XoBo1UePyYSeCTjJayNdPx2DHk3Qy8`
+				);
+				const result = await response.json();
+				if (result.status === 'OK') {
+					return result.results;
+				}
+				return [ { formatted_address: '' }]
+			} catch (err) {
+				console.error(err);
+			}
+		}
+		return fetchAPI(latlong);
+	}
+
 	// Component Life Cycles
 	componentWillMount() {
 		console.log('Map Comp. @ componentWillMount')
