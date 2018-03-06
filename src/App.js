@@ -7,9 +7,10 @@ import MapPage from './components/Map';
 const Stack = StackNavigator(
 	{
 		Main: { screen: MainPage },
+		Map: { screen: MapPage }
 	},
 	{
-		initialRouteName: 'Main',
+		initialRouteName: 'Map',
 	}
 );
 
@@ -84,7 +85,10 @@ export default class App extends Component {
 
 	render() {
 		return (
-			<Stack screenProps={{ rootMethod: this.rootMethod, rootState: this.state }}/>
+			<Stack 
+				// Passing root props via StackNavigation 
+				screenProps={{ rootMethod: this.rootMethod, rootState: this.state }}
+			/>
 		);
 	}
 }
