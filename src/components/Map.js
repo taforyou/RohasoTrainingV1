@@ -43,6 +43,7 @@ export default class MapPage extends Component {
 
 		// Binding methods
 		this.onRegionChange = this.onRegionChange.bind(this);
+		this.getSelectedLocation = this.getSelectedLocation.bind(this);
 	};
 
 	// React-Navigation Options
@@ -117,6 +118,11 @@ export default class MapPage extends Component {
 		return fetchAPI(latlong);
 	}
 
+	getSelectedLocation () {
+		this.props.navigation.navigate('Main')
+		this.root.method.getSelectedLocation(this.state.mode, this.state.currentLocation)
+	}
+
 	// Component Life Cycles
 	componentWillMount() {
 		console.log('Map Comp. @ componentWillMount')
@@ -172,7 +178,7 @@ export default class MapPage extends Component {
 						</View>
 						<View style={{ flex: 1, backgroundColor: '#ffffff' }}>
 							<NB.Button full block success 
-								onPress={() => this.getSelectedData()}
+								onPress={() => { this.getSelectedLocation() }}
 							>
 								<Text
 									style={{ color: "white" }}

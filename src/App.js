@@ -64,12 +64,16 @@ export default class App extends Component {
 				} ],
 			},
 		};
+
 		// Passing and binding method as props
 		this.rootMethod = {
-			test: this.test.bind(this)
+			test: this.test.bind(this),
+			getSelectedLocation: this.getSelectedLocation.bind(this),
 		};
+
 		// Binding internal methods
 	};
+
 	// Methods to pass as props
 	test() {
 		Alert.alert(
@@ -81,6 +85,13 @@ export default class App extends Component {
 			{ cancelable: false }
 		);
 	};
+
+	getSelectedLocation(mode, data) {
+		Alert.alert(
+			`Get location from Map in mode "${mode}"`
+		)
+	};
+
 	// Methods internally use
 
 	// Component Life-Cycles
@@ -107,18 +118,15 @@ export default class App extends Component {
 			};
 
 			this.setState({
-					currentLocation: {
-						...this.state.currentLocation,
-						coords:
-							Object.assign({}
-								, this.state.currentLocation.coords
-								, resultCoords
-								, { flag: false }
-							)
-					}
-				},() => {
-					console.log('New state after setState()')
-					console.log(this.state)
+				currentLocation: {
+					...this.state.currentLocation,
+					coords:
+						Object.assign({}
+							, this.state.currentLocation.coords
+							, resultCoords
+							, { flag: false }
+						)
+				}
 			});
 		});
 	};
@@ -126,15 +134,19 @@ export default class App extends Component {
 	componentDidMount() {
 		console.log('App Root Comp. @ componentDidMount');
 	};
+
 	componentWillUpdate() {
 		console.log('App Root Comp. @ componentWillUpdate');
 	};
+
 	componentDidUpdate() {
 		console.log('App Root Comp. @ componentDidUpdate');
 	};
+
 	componentWillUnmount() {
 		console.log('App Root Comp. @ componentWillUnmount');
 	};
+
 	render() {
 		return (
 			<Stack 
