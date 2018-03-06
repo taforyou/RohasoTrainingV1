@@ -25,25 +25,35 @@ export default class MapPage extends Component {
 				],
 			},
 			mapType: "standard",
-			mode: "sender",
+			mode: null,
 		};
+		// Initializing
+		console.log("Map comp @ Initializing in constructor()")
+		if(props.navigation.state.hasOwnProperty('params')) {
+			if(props.navigation.state.params.hasOwnProperty('mode')) {
+				this.state.mode = props.navigation.state.params.mode;
+			};
+		};
+
 		// Biding root props
 		this.root = {
 			state: props.screenProps.rootState,
 			method: props.screenProps.rootMethod,
 		};
+
 		// Binding methods
 		this.onRegionChange = this.onRegionChange.bind(this);
 	};
-	// React Navigation Options
+
+	// React-Navigation Options
 	static navigationOptions = ({ navigation, navigationOptions }) => {
-		let mode = '';
+		let mode = null
 		if(navigation.state.hasOwnProperty('params')) {
 			if(navigation.state.params.hasOwnProperty('mode')) {
 				mode = navigation.state.params.mode;
-			};
-		};
-
+			}
+		}
+		
 		return {
 			title: mode === "sender" ? "Select address to receive packages"
 			: mode === "receiver" ? "Select address to send packages"
