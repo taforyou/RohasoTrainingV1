@@ -1,12 +1,14 @@
-import React, { Component } from 'react'
-import { Text, View, StyleSheet, TouchableOpacity } from 'react-native'
-import { Container } from 'native-base'
-import MapView from 'react-native-maps'
-import * as NB from 'native-base'
+import React, { Component } from 'react';
+import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
+import { Container } from 'native-base';
+import MapView from 'react-native-maps';
+import * as NB from 'native-base';
+const debug = true;
 
 export default class MapPage extends Component {
 	constructor(props) {
-		super(props)
+		super(props);
+		console.log("Map Comp. @ constructor()");
 		// Internal State
 		this.state = {
 			coords: {
@@ -22,15 +24,15 @@ export default class MapPage extends Component {
 			],
 			mapType: "standard",
 			mode: "sender",
-		}
+		};
 		// Biding root props
 		this.root = {
 			state: props.screenProps.rootState,
 			method: props.screenProps.rootMethod,
-		}
+		};
 		// Binding methods
-		this.onRegionChange = this.onRegionChange.bind(this)
-	}
+		this.onRegionChange = this.onRegionChange.bind(this);
+	};
 	// React Navigation Options
 	static navigationOptions = ({ navigation, navigationOptions }) => {
 		const { params } = navigation.state;
@@ -48,18 +50,41 @@ export default class MapPage extends Component {
 	};
 	// Internal Methods
 	onRegionChange(region) {
-		let coords = { ...this.state.coords }
-		coords.latitude = region.latitude
-		coords.longitude = region.longitude
-		this.setState({ coords })
-	}
+		let coords = { ...this.state.coords };
+		coords.latitude = region.latitude;
+		coords.longitude = region.longitude;
+		this.setState({ coords });
+	};
 	// Component Life Cycles
 	componentWillMount() {
-		console.log("MapPage @ componentWillMount()")
-	}
-	componentWillReceiveProps(nextProps) {
-	  console.log("MapPage @ componentWillReceiveProps()")
-	}
+		console.log('Map Comp. @ componentWillMount')
+	};
+	componentDidMount() {
+		console.log('Map Comp. @ componentDidMount')
+	};
+	componentWillReceiveProps(props) {
+		console.log('Map Comp. @ componentWillReceiveProps')			
+		if(debug) {
+			console.log('-----= props =-----'); console.log(props);
+		};
+	};
+	componentWillUpdate(nextProps, nextState) {
+		console.log('Map Comp. @ componentWillUpdate')
+			if(debug) {
+				console.log('-----= nextProps =-----'); console.log(nextProps);
+				console.log('-----= nextState =-----'); console.log(nextState);
+			};
+	};
+	componentDidUpdate(prevProps, prevState) {
+		console.log('Map Comp. @ componentDidUpdate')
+			if(debug) {
+				console.log('-----= prevProps =-----'); console.log(prevProps);
+				console.log('-----= prevState =-----'); console.log(prevState);
+			};
+	};
+	componentWillUnmount() {
+		console.log('Map Comp. @ componentWillUnmount')
+	};
 
 	render() {
 		return (
@@ -102,9 +127,9 @@ export default class MapPage extends Component {
 					: <Text>Error: Wrong mode</Text>
 				}
 			</Container>
-		)
-	}
-}
+		);
+	};
+};
 
 const styles = StyleSheet.create({
   map: {
@@ -117,4 +142,4 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 		justifyContent: 'center',
 	}
-})
+});
