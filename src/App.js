@@ -10,7 +10,7 @@ const Stack = StackNavigator(
 		Map: { screen: MapPage }
 	},
 	{
-		initialRouteName: 'Map',
+		initialRouteName: 'Main',
 	}
 );
 
@@ -63,12 +63,14 @@ export default class App extends Component {
 					formatted_address: ''
 				} ],
 			},
-		}
+		};
+		// Passing and binding method as props
 		this.rootMethod = {
 			test: this.test.bind(this)
-		}
+		};
+		// Binding internal methods
 	};
-	// Methods to pass as props : bind
+	// Methods to pass as props
 	test() {
 		Alert.alert(
 			`Test calling root method from App component`,
@@ -77,26 +79,62 @@ export default class App extends Component {
 				{text: 'OK', onPress: () => console.log('OK!!')},
 			],
 			{ cancelable: false }
-		)
-	}
+		);
+	};
 	// Methods internally use
 
 	// Component Life-Cycles
 	componentWillMount() {
-		console.log('App Root Comp. @ componentWillMount')
-	}
+		console.log('App Root Comp. @ componentWillMount');
+		 
+	// App Initializing processes : Todo -> Move to be a function
+		// Get GPS data from device
+		navigator.geolocation.getCurrentPosition((result, error) => {
+			let resultCoords = {
+				latitude: 0,
+				longitude: 0,
+				latitudeDelta: 0,
+				logitudeDelta: 0.05,
+			};
+
+			if(result) {
+				if(result.hasOwnProperty('coords')) {
+					resultCoords = result.coords
+				}
+			} else {
+				console.log(error)
+				resultCoords.error = error
+			};
+
+			this.setState({
+					currentLocation: {
+						...this.state.currentLocation,
+						coords:
+							Object.assign({}
+								, this.state.currentLocation.coords
+								, resultCoords
+								, { flag: false }
+							)
+					}
+				},() => {
+					console.log('New state after setState()')
+					console.log(this.state)
+			});
+		});
+	};
+
 	componentDidMount() {
-		console.log('App Root Comp. @ componentDidMount')
-	}
+		console.log('App Root Comp. @ componentDidMount');
+	};
 	componentWillUpdate() {
-		console.log('App Root Comp. @ componentWillUpdate')
-	}
+		console.log('App Root Comp. @ componentWillUpdate');
+	};
 	componentDidUpdate() {
-		console.log('App Root Comp. @ componentDidUpdate')
-	}
+		console.log('App Root Comp. @ componentDidUpdate');
+	};
 	componentWillUnmount() {
-		console.log('App Root Comp. @ componentWillUnmount')
-	}
+		console.log('App Root Comp. @ componentWillUnmount');
+	};
 	render() {
 		return (
 			<Stack 
@@ -104,5 +142,5 @@ export default class App extends Component {
 				screenProps={{ rootMethod: this.rootMethod, rootState: this.state }}
 			/>
 		);
-	}
-}
+	};
+};
