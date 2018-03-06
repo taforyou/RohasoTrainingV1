@@ -35,10 +35,17 @@ export default class MapPage extends Component {
 	};
 	// React Navigation Options
 	static navigationOptions = ({ navigation, navigationOptions }) => {
-		const { params } = navigation.state;
+		let mode = '';
+		if(navigation.state.hasOwnProperty('params')) {
+			if(navigation.state.params.hasOwnProperty('mode')) {
+				mode = navigation.state.params.mode;
+			};
+		};
 
 		return {
-			title: 'Select location',
+			title: mode === "sender" ? "Select address to receive packages"
+			: mode === "receiver" ? "Select address to send packages"
+			: 'Select location',
 			headerStyle: {
 				backgroundColor: 'black',
 			},
@@ -46,7 +53,7 @@ export default class MapPage extends Component {
 			headerTitleStyle: {
 				fontWeight: 'bold',
 			},
-		}
+		};
 	};
 	// Internal Methods
 	onRegionChange(region) {
@@ -141,5 +148,5 @@ const styles = StyleSheet.create({
 		flexDirection: 'row',
 		alignItems: 'center',
 		justifyContent: 'center',
-	}
+	},
 });
