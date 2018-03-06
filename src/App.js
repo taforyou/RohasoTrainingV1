@@ -7,7 +7,6 @@ import MapPage from './components/Map';
 const Stack = StackNavigator(
 	{
 		Main: { screen: MainPage },
-		Map: { screen: MapPage }
 	},
 	{
 		initialRouteName: 'Main',
@@ -65,10 +64,20 @@ export default class App extends Component {
 			},
 		}
 		this.rootMethod = {
+			test: this.test.bind(this)
 		}
 	};
 	// Methods to pass as props : bind
-
+	test() {
+		Alert.alert(
+			`Test calling root method from App component`,
+			'Is that Okay!?',
+			[
+				{text: 'OK', onPress: () => console.log('OK!!')},
+			],
+			{ cancelable: false }
+		)
+	}
 	// Methods internally use
 
 	// Component Life-Cycles
