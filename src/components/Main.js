@@ -48,10 +48,77 @@ export default class Main extends Component {
 	render() {
 		return (
 			<NB.Container>
-				<NB.Button full block primary onPress={() => this.root.method.test()}>
-					<Text style={{ color: 'white'}}>Next</Text>
+				<View style={{ backgroundColor: "black", padding: 20 }}>
+					<Text style={{ fontSize: 30, fontWeight: "bold", color: "white", textAlign: "center"}}>Rohaso Messenger Service</Text>
+					<Text style={{ fontSize: 16, color: "white", textAlign: "center"}}>Deliver your package quickly and safely</Text>
+				</View>
+				<TouchableOpacity 
+					style={[styles.menuFrame, {}]}
+					onPress={() => this.props.navigation.navigate('Map', { mode: "sender", })}>
+					<View style={styles.menuGroupLeft}>
+						<Text style={styles.menuTitle}>SENDER</Text>
+						<Text style={styles.menuDescription}>Tab to search addresses</Text>
+					</View>
+					<View style={styles.menuGroupRight}>
+						<Text style={styles.menuRecent}>RECENT</Text>
+						<Text style={styles.menuNextButton}>{">"}</Text>
+					</View>
+				</TouchableOpacity>
+				<TouchableOpacity 
+					style={[styles.menuFrame, {}]}
+					onPress={() => this.props.navigation.navigate('Map', { mode: "receiver", })}>
+					<View style={styles.menuGroupLeft}>
+						<Text style={styles.menuTitle}>RECIPIENT</Text>
+						<Text style={styles.menuDescription}>Tab to search addresses</Text>
+					</View>
+					<View style={styles.menuGroupRight}>
+						<Text style={styles.menuRecent}>RECENT</Text>
+						<Text style={styles.menuNextButton}>{">"}</Text>
+					</View>
+				</TouchableOpacity>
+				<NB.Button full block primary>
+					<Text style={{ color: 'white'}}>NEXT</Text>
 				</NB.Button>
 			</NB.Container>
 		);
 	};
 };
+
+const styles = StyleSheet.create({
+	menuFrame: {
+		borderStyle: "solid", 
+		borderBottomColor: "#999999", 
+		borderBottomWidth: 1,
+		backgroundColor: "#dddddd",
+		padding: 20,
+		height: 120,
+		display: "flex",
+		flexDirection: "row"
+	},
+	menuGroupLeft: {
+		width: '75%'
+	},
+	menuGroupRight: {
+		width: '25%'
+	},
+	menuTitle: {
+    color: 'black',
+    fontWeight: 'bold',
+		fontSize: 28,
+		letterSpacing: 10,
+		paddingTop: 10,
+	},
+	menuDescription: {
+    color: 'black',
+    fontSize: 16,
+		paddingTop: 5,
+	},
+	menuRecent: {
+		fontSize: 20,
+		textDecorationLine: 'underline',
+		paddingTop: 10,
+	},
+	menuNextButton: {
+		fontSize: 20,
+	},
+});
