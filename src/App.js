@@ -17,7 +17,7 @@ const Stack = StackNavigator(
 export default class App extends Component {
 	constructor(props){
 		super(props);
-		console.log("App @ constructor()")
+		console.log("App Root Comp. @ constructor()")
 		this.state = {
 			currentLocation: {
 				coords: {
@@ -82,7 +82,21 @@ export default class App extends Component {
 	// Methods internally use
 
 	// Component Life-Cycles
-
+	componentWillMount() {
+		console.log('App Root Comp. @ componentWillMount')
+	}
+	componentDidMount() {
+		console.log('App Root Comp. @ componentDidMount')
+	}
+	componentWillUpdate() {
+		console.log('App Root Comp. @ componentWillUpdate')
+	}
+	componentDidUpdate() {
+		console.log('App Root Comp. @ componentDidUpdate')
+	}
+	componentWillUnmount() {
+		console.log('App Root Comp. @ componentWillUnmount')
+	}
 	render() {
 		return (
 			<Stack 
