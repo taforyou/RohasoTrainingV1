@@ -11,17 +11,19 @@ export default class MapPage extends Component {
 		console.log("Map Comp. @ constructor()");
 		// Internal State
 		this.state = {
-			coords: {
-				latitude: 0,
-				longitude: 0,
-				latitudeDelta: 0,
-				longitudeDelta: 0,
+			currentLocation: {
+				coords: {
+					latitude: 0,
+					longitude: 0,
+					latitudeDelta: 0.05,
+					longitudeDelta: 0,
+				},
+				address: [
+					{
+						formatted_address: null
+					}
+				],
 			},
-			address: [
-				{
-					formatted_address: null
-				}
-			],
 			mapType: "standard",
 			mode: "sender",
 		};
@@ -57,10 +59,17 @@ export default class MapPage extends Component {
 	};
 	// Internal Methods
 	onRegionChange(region) {
-		let coords = { ...this.state.coords };
-		coords.latitude = region.latitude;
-		coords.longitude = region.longitude;
-		this.setState({ coords });
+		this.setState({
+			currentLocation: {
+				...this.state.currentLocation,
+				coords:
+					Object.assign({}
+						, this.state.currentLocation.coords
+						, region
+						, { flag: false }
+					)
+			}
+		})
 	};
 	// Component Life Cycles
 	componentWillMount() {
@@ -109,7 +118,7 @@ export default class MapPage extends Component {
 								provider="google"
 								mapType={this.state.mapType}
 								loadingEnabled={true}
-								initialRegion={this.state.coords}
+								initialRegion={this.root.state.currentLocation.coords}
 								onRegionChangeComplete={this.onRegionChange}
 							>
 							</MapView>
@@ -124,10 +133,20 @@ export default class MapPage extends Component {
 								>Use this location</Text>
 							</NB.Button>
 							<Text>
-								Latitude: {this.state.coords.latitude} Longitude: {this.state.coords.longitude}
+								Latitude: {this.state.currentLocation.coords.latitude} Longitude: {this.state.currentLocation.coords.longitude}
 							</Text>
 							<Text>
-								Address: {this.state.address[0].formatted_address}
+								Latitude Delta: {this.state.currentLocation.coords.latitudeDelta} Longitude Delta: {this.state.currentLocation.coords.longitudeDelta}
+							</Text>
+							<Text>
+								RootProps Coords: 
+									{this.root.state.currentLocation.coords.latitude},
+									{this.root.state.currentLocation.coords.longitude},
+									{this.root.state.currentLocation.coords.latitudeDelta},
+									{this.root.state.currentLocation.coords.longitudeDelta},
+							</Text>
+							<Text>
+								Address: {this.state.currentLocation.address[0].formatted_address}
 							</Text>
 						</View>
 					</Container>
