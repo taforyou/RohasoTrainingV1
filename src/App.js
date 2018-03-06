@@ -4,6 +4,7 @@ import { StackNavigator } from 'react-navigation';
 import MainPage from './components/Main';
 import MapPage from './components/Map';
 
+const debug = true;
 const Stack = StackNavigator(
 	{
 		Main: { screen: MainPage },
@@ -87,9 +88,31 @@ export default class App extends Component {
 	};
 
 	getSelectedLocation(mode, data) {
-		Alert.alert(
-			`Get location from Map in mode "${mode}"`
-		)
+		if(typeof debug !== 'undefined' && debug === true) {
+			Alert.alert(
+				`Get location from Map in mode "${mode}"`,
+				JSON.stringify(data)
+			)
+		}
+		if(typeof mode === 'string') {
+			if(data.constructor === Object) {
+				if(mode === "sender") {
+					this.setState({
+						senderLocation: Object.assign({},
+							data
+						)
+					})
+				}
+
+				if(mode === "receiver") {
+					this.setState({
+						receiverLocation: Object.assign({},
+							data
+						)
+					})
+				}
+			}
+		}
 	};
 
 	// Methods internally use

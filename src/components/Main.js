@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import * as NB from 'native-base';
+const debug = true;
 
 export default class Main extends Component {
 	constructor(props) {
@@ -57,10 +58,18 @@ export default class Main extends Component {
 					onPress={() => this.props.navigation.navigate('Map', { mode: "sender", })}>
 					<View style={styles.menuGroupLeft}>
 						<Text style={styles.menuTitle}>SENDER</Text>
-						<Text style={styles.menuDescription}>Tab to search addresses</Text>
+						<Text style={styles.menuDescription}>
+						{
+							this.root.state.senderLocation.address[0].formatted_address
+							? this.root.state.senderLocation.address[0].formatted_address
+							: 'Tab to search addresses'
+						}
+						</Text>
 					</View>
 					<View style={styles.menuGroupRight}>
-						<Text style={styles.menuRecent}>RECENT</Text>
+						<Text style={styles.menuRecent}>
+							RECENT
+						</Text>
 						<Text style={styles.menuNextButton}>{">"}</Text>
 					</View>
 				</TouchableOpacity>
@@ -69,10 +78,18 @@ export default class Main extends Component {
 					onPress={() => this.props.navigation.navigate('Map', { mode: "receiver", })}>
 					<View style={styles.menuGroupLeft}>
 						<Text style={styles.menuTitle}>RECIPIENT</Text>
-						<Text style={styles.menuDescription}>Tab to search addresses</Text>
+						<Text style={styles.menuDescription}>
+						{
+							this.root.state.receiverLocation.address[0].formatted_address 
+							? this.root.state.receiverLocation.address[0].formatted_address
+							: 'Tab to search addresses'
+						}
+						</Text>
 					</View>
 					<View style={styles.menuGroupRight}>
-						<Text style={styles.menuRecent}>RECENT</Text>
+						<Text style={styles.menuRecent}>
+							RECENT
+						</Text>
 						<Text style={styles.menuNextButton}>{">"}</Text>
 					</View>
 				</TouchableOpacity>
