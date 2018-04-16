@@ -3,6 +3,15 @@ import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import * as NB from 'native-base';
 const debug = true;
 
+	// Todo: 
+	// - Seperate menu button to be two
+	// 		- Exoandable menu wheh get address from the API 
+	//		- View Recent tasks (can get the recent location to re-send)
+	//		- Select location on map (the old)
+	// - Add menu to get messages to sender
+	// - Next button with listener (Validation )
+	// - Set roundtrip toggle
+
 export default class Main extends Component {
 	constructor(props) {
 		super(props);
@@ -73,6 +82,7 @@ export default class Main extends Component {
 						<Text style={styles.menuNextButton}>{">"}</Text>
 					</View>
 				</TouchableOpacity>
+
 				<TouchableOpacity 
 					style={[styles.menuFrame, {}]}
 					onPress={() => this.props.navigation.navigate('Map', { mode: "receiver", })}>

@@ -5,6 +5,21 @@ import MapView from 'react-native-maps';
 import * as NB from 'native-base';
 const debug = true;
 
+// Todo:
+// - Search by location name (string)
+// 		- Marks of locations with seperated types (eg. recent location)
+//		- View nearby messengers
+// - Touch on map to mark
+
+// Todos in next stage component
+// - Message to driver
+// - Send feedback to system provider
+// - Better home screen for app
+// - Authentication
+
+// Todos on backend
+// - Data pattern for tasks
+
 export default class MapPage extends Component {
 	constructor(props) {
 		super(props);
